@@ -67,12 +67,13 @@
                 android:src="@drawable/keywelcome" />
 
             <TextView
+                android:id="@+id/login_link1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="6dp"
-                android:text="Inicio de Sesión"
                 android:fontFamily="@font/alice"
+                android:text="Inicio de Sesión"
                 android:textColor="#321306"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -80,9 +81,9 @@
 
         <LinearLayout
             android:onClick="registration"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -91,12 +92,13 @@
                 android:src="@drawable/registrowelcome" />
 
             <TextView
+                android:id="@+id/reg_link1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="6dp"
-                android:text="Registro"
                 android:fontFamily="@font/alice"
+                android:text="Registro"
                 android:textColor="#321306"
                 android:textSize="22sp"
                 android:textStyle="bold" />
