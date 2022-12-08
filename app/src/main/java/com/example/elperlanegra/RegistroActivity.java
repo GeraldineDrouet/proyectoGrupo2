@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class RegistroActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
 
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,10 @@ public class RegistroActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+
+        progressBar = findViewById(R.id.progressbarreg);
+        progressBar.setVisibility(View.GONE);
+
         registro = (Button) findViewById(R.id.reg_btn);
         nombre = (EditText) findViewById(R.id.name_reg);
         direccion = (EditText) findViewById(R.id.direccion_reg);
@@ -46,7 +53,8 @@ public class RegistroActivity extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               crearUsuario();
+                crearUsuario();
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -105,9 +113,10 @@ public class RegistroActivity extends AppCompatActivity {
                             String id = task.getResult().getUser().getUid();
                             database.getReference().child("Users").child(id).setValue(modeloUser);
 
-
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(RegistroActivity.this, "¡REGISTRO EXITOSO!", Toast.LENGTH_SHORT).show();
                         } else {
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(RegistroActivity.this, "ERROR:"+task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
