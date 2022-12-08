@@ -5,15 +5,17 @@ public class ModeloUser {
     String direccion;
     String correo;
     String contrasena;
+    String telefono;
 
     public ModeloUser() {
     }
 
-    public ModeloUser(String nombre, String direccion, String correo, String contrasena) {
+    public ModeloUser(String nombre, String direccion, String correo, String contrasena, String telefono) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.correo = correo;
         this.contrasena = contrasena;
+        this.telefono = telefono;
     }
 
     public String getNombre() {
@@ -46,5 +48,13 @@ public class ModeloUser {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

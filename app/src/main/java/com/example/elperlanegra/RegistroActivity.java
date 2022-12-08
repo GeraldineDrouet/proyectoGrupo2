@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegistroActivity extends AppCompatActivity {
 
     Button registro;
-    EditText nombre, direccion, email, password;
+    EditText nombre, direccion, email, password, telefono;
     TextView login;
 
     FirebaseAuth auth;
@@ -40,6 +40,7 @@ public class RegistroActivity extends AppCompatActivity {
         direccion = (EditText) findViewById(R.id.direccion_reg);
         email = (EditText) findViewById(R.id.email_reg);
         password = (EditText) findViewById(R.id.pass_reg);
+        telefono = (EditText) findViewById(R.id.telf_reg);
         login = (TextView) findViewById(R.id.login_link);
 
         registro.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +63,7 @@ public class RegistroActivity extends AppCompatActivity {
         String DireccionUser = direccion.getText().toString();
         String CorreoUser = email.getText().toString();
         String ContrasenaUser = password.getText().toString();
+        String TelefonoUser = telefono.getText().toString();
 
         if(TextUtils.isEmpty(NombreUser)){
             Toast.makeText(this,"¡Campo <Nombre y Apellido> está vacío!", Toast.LENGTH_SHORT).show();
@@ -88,13 +90,18 @@ public class RegistroActivity extends AppCompatActivity {
             return;
         }
 
+        if(TextUtils.isEmpty(TelefonoUser)){
+            Toast.makeText(this,"¡Campo <Teléfono> está vacío!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //CREACIÓN DE USUARIO
         auth.createUserWithEmailAndPassword(CorreoUser,ContrasenaUser)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            ModeloUser modeloUser = new ModeloUser(NombreUser,DireccionUser,CorreoUser,ContrasenaUser);
+                            ModeloUser modeloUser = new ModeloUser(NombreUser,DireccionUser,CorreoUser,ContrasenaUser,TelefonoUser);
                             String id = task.getResult().getUser().getUid();
                             database.getReference().child("Users").child(id).setValue(modeloUser);
 
