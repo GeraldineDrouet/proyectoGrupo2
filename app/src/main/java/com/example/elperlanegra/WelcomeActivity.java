@@ -28,7 +28,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if (auth.getCurrentUser() != null){
             progressBar.setVisibility(View.VISIBLE);
+            startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
             Toast.makeText(this, "Por favor espera! Ya has iniciado sesión.", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
     public void registration(View view){

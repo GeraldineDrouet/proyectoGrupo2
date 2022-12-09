@@ -1,0 +1,80 @@
+Index: app/src/main/java/com/example/elperlanegra/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.elperlanegra;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.view.Menu;\r\nimport android.widget.TextView;\r\n\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.example.elperlanegra.modelos.ModeloUser;\r\nimport com.google.android.material.snackbar.Snackbar;\r\nimport com.google.android.material.navigation.NavigationView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.navigation.NavController;\r\nimport androidx.navigation.Navigation;\r\nimport androidx.navigation.ui.AppBarConfiguration;\r\nimport androidx.navigation.ui.NavigationUI;\r\nimport androidx.drawerlayout.widget.DrawerLayout;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.elperlanegra.databinding.ActivityMainBinding;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\nimport de.hdodenhof.circleimageview.CircleImageView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private AppBarConfiguration mAppBarConfiguration;\r\n    FirebaseAuth auth;\r\n    FirebaseDatabase database;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        Toolbar toolbar = findViewById(R.id.toolbar);\r\n        setSupportActionBar(toolbar);\r\n\r\n        auth = FirebaseAuth.getInstance();\r\n        database = FirebaseDatabase.getInstance();\r\n\r\n        DrawerLayout drawer = findViewById(R.id.drawer_layout);\r\n        NavigationView navigationView = findViewById(R.id.nav_view);\r\n\r\n        mAppBarConfiguration = new AppBarConfiguration.Builder(\r\n                R.id.nav_home, R.id.nav_categorias, R.id.nav_perfil, R.id.nav_ofertasTemp, R.id.nav_nuevosProd, R.id.nav_pedidos, R.id.nav_carrito)\r\n                .setDrawerLayout(drawer)\r\n                .build();\r\n        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);\r\n        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);\r\n        NavigationUI.setupWithNavController(navigationView, navController);\r\n\r\n        View headerView = navigationView.getHeaderView(0);\r\n        TextView nav_header_nombre = headerView.findViewById(R.id.nav_header_nombre);\r\n        TextView nav_header_email = headerView.findViewById(R.id.nav_header_email);\r\n        CircleImageView headerImg = headerView.findViewById(R.id.nav_header_img);\r\n\r\n        database.getReference().child(\"Users\").child(FirebaseAuth.getInstance().getUid())\r\n                .addListenerForSingleValueEvent(new ValueEventListener() {\r\n                    @Override\r\n                    public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                        ModeloUser userModel = snapshot.getValue(ModeloUser.class);\r\n\r\n                        nav_header_nombre.setText(userModel.getNombre());\r\n                        nav_header_email.setText(userModel.getCorreo());\r\n                        Glide.with(MainActivity.this).load(userModel.getImgPerfil()).into(headerImg);\r\n                    }\r\n\r\n                    @Override\r\n                    public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n                    }\r\n                });\r\n    }\r\n\r\n    @Override\r\n    public boolean onCreateOptionsMenu(Menu menu) {\r\n        // Inflate the menu; this adds items to the action bar if it is present.\r\n        getMenuInflater().inflate(R.menu.main, menu);\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public boolean onSupportNavigateUp() {\r\n        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);\r\n        return NavigationUI.navigateUp(navController, mAppBarConfiguration)\r\n                || super.onSupportNavigateUp();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/elperlanegra/MainActivity.java b/app/src/main/java/com/example/elperlanegra/MainActivity.java
+--- a/app/src/main/java/com/example/elperlanegra/MainActivity.java	
++++ b/app/src/main/java/com/example/elperlanegra/MainActivity.java	
+@@ -69,7 +69,7 @@
+ 
+                         nav_header_nombre.setText(userModel.getNombre());
+                         nav_header_email.setText(userModel.getCorreo());
+-                        Glide.with(MainActivity.this).load(userModel.getImgPerfil()).into(headerImg);
++                        //Glide.with(MainActivity.this).load(userModel.getImgPerfil()).into(headerImg);
+                     }
+ 
+                     @Override
+Index: app/src/main/res/menu/activity_main_drawer.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    tools:showIn=\"navigation_view\">\r\n\r\n    <group android:checkableBehavior=\"single\">\r\n        <item\r\n            android:id=\"@+id/nav_home\"\r\n            android:icon=\"@drawable/ic_home\"\r\n            android:title=\"@string/Inicio\" />\r\n        <item\r\n            android:id=\"@+id/nav_perfil\"\r\n            android:icon=\"@drawable/ic_profile\"\r\n            android:title=\"@string/perfil\" />\r\n        <item\r\n            android:id=\"@+id/nav_categorias\"\r\n            android:icon=\"@drawable/ic_category\"\r\n            android:title=\"@string/categorias\" />\r\n        <item\r\n            android:id=\"@+id/nav_ofertasTemp\"\r\n            android:icon=\"@drawable/ic_offers\"\r\n            android:title=\"@string/ofertas\" />\r\n        <item\r\n            android:id=\"@+id/nav_nuevosProd\"\r\n            android:icon=\"@drawable/ic_newProd\"\r\n            android:title=\"@string/nuevos_productos\" />\r\n        <item\r\n            android:id=\"@+id/nav_pedidos\"\r\n            android:icon=\"@drawable/ic_orders\"\r\n            android:title=\"@string/pedidos\" />\r\n        <item\r\n            android:id=\"@+id/nav_carrito\"\r\n            android:icon=\"@drawable/ic_cart\"\r\n            android:title=\"@string/carrito\" />\r\n    </group>\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/activity_main_drawer.xml b/app/src/main/res/menu/activity_main_drawer.xml
+--- a/app/src/main/res/menu/activity_main_drawer.xml	
++++ b/app/src/main/res/menu/activity_main_drawer.xml	
+@@ -22,7 +22,7 @@
+             android:title="@string/ofertas" />
+         <item
+             android:id="@+id/nav_nuevosProd"
+-            android:icon="@drawable/ic_newProd"
++            android:icon="@drawable/ic_newprod"
+             android:title="@string/nuevos_productos" />
+         <item
+             android:id="@+id/nav_pedidos"
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n}\r\n\r\nandroid {\r\n    namespace 'com.example.elperlanegra'\r\n    compileSdk 32\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.elperlanegra\"\r\n        minSdk 28\r\n        targetSdk 32\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    buildFeatures {\r\n        viewBinding true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.appcompat:appcompat:1.5.1'\r\n    implementation 'com.google.android.material:material:1.7.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'\r\n    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'\r\n    implementation 'androidx.navigation:navigation-fragment:2.5.3'\r\n    implementation 'androidx.navigation:navigation-ui:2.5.3'\r\n    implementation 'com.google.firebase:firebase-common-ktx:20.1.0'\r\n    implementation 'com.google.firebase:firebase-auth:21.0.3'\r\n    implementation 'com.google.firebase:firebase-database:20.0.4'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.4'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'\r\n    implementation  'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.github.bumptech.glide:glide:4.14.2'\r\n    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	
++++ b/app/build.gradle	
+@@ -1,5 +1,6 @@
+ plugins {
+     id 'com.android.application'
++    id 'com.google.gms.google-services'
+ }
+ 
+ android {
+Index: app/src/main/java/com/example/elperlanegra/actividades/WelcomeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.elperlanegra.actividades;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.ProgressBar;\r\nimport android.widget.Toast;\r\n\r\nimport com.example.elperlanegra.MainActivity;\r\nimport com.example.elperlanegra.R;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\n\r\n\r\npublic class WelcomeActivity extends AppCompatActivity {\r\n\r\n    ProgressBar progressBar;\r\n    FirebaseAuth auth;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_welcome);\r\n\r\n        auth = FirebaseAuth.getInstance();\r\n\r\n        progressBar = findViewById(R.id.progressbarwelcome);\r\n        progressBar.setVisibility(View.GONE);\r\n\r\n        if (auth.getCurrentUser() != null){\r\n            progressBar.setVisibility(View.VISIBLE);\r\n            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));\r\n            Toast.makeText(this, \"Por favor espera! Ya has iniciado sesión.\", Toast.LENGTH_SHORT).show();\r\n            finish();\r\n        }\r\n    }\r\n    public void registration(View view){\r\n        startActivity(new Intent(WelcomeActivity.this, RegistroActivity.class));\r\n    }\r\n\r\n    public void login(View view){\r\n        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));\r\n    }\r\n\r\n\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/elperlanegra/actividades/WelcomeActivity.java b/app/src/main/java/com/example/elperlanegra/actividades/WelcomeActivity.java
+--- a/app/src/main/java/com/example/elperlanegra/actividades/WelcomeActivity.java	
++++ b/app/src/main/java/com/example/elperlanegra/actividades/WelcomeActivity.java	
+@@ -10,6 +10,7 @@
+ 
+ import com.example.elperlanegra.MainActivity;
+ import com.example.elperlanegra.R;
++import com.google.firebase.FirebaseApp;
+ import com.google.firebase.auth.FirebaseAuth;
+ 
+ 
+@@ -22,7 +23,7 @@
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_welcome);
+-
++       // FirebaseApp.initializeApp(this);
+         auth = FirebaseAuth.getInstance();
+ 
+         progressBar = findViewById(R.id.progressbarwelcome);
