@@ -1,15 +1,15 @@
 package com.example.elperlanegra.modelos;
 
-public class CategoriasInicio {
+public class ModeloCategoriasInicio {
 
     String nombre;
     String tipo;
     String img_url;
 
-    public CategoriasInicio() {
+    public ModeloCategoriasInicio() {
     }
 
-    public CategoriasInicio(String nombre, String tipo, String img_url) {
+    public ModeloCategoriasInicio(String nombre, String tipo, String img_url) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.img_url = img_url;

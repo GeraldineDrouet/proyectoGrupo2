@@ -1,25 +1,23 @@
 package com.example.elperlanegra.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.elperlanegra.R;
 import com.example.elperlanegra.adapter.CategInicioAdapter;
 import com.example.elperlanegra.adapter.PopularAdapters;
-import com.example.elperlanegra.databinding.FragmentHomeBinding;
-import com.example.elperlanegra.modelos.CategoriasInicio;
+import com.example.elperlanegra.adapter.RecomendadosAdapter;
+import com.example.elperlanegra.modelos.ModeloCategoriasInicio;
 import com.example.elperlanegra.modelos.ModeloPopular;
+import com.example.elperlanegra.modelos.ModeloRecomendados;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,7 +29,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView popularRec, inicioCatRec;
+    RecyclerView popularRec, inicioCatRec,recomendadosRec;
     FirebaseFirestore db;
 
     //Ofertas Tiempo Limitado items
@@ -39,8 +37,12 @@ public class HomeFragment extends Fragment {
     PopularAdapters popularAdapters;
 
     //Categorías Inicio
-    List<CategoriasInicio> categoriasInicioList;
+    List<ModeloCategoriasInicio> modeloCategoriasInicioList;
     CategInicioAdapter categInicioAdapter;
+
+    //Recomendados
+    List<ModeloRecomendados> modeloRecomendadosList;
+    RecomendadosAdapter recomendadosAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
 
         popularRec = root.findViewById(R.id.pop_rec);
         inicioCatRec = root.findViewById(R.id.explore_rec);
+        recomendadosRec = root.findViewById(R.id.recommended_rec);
 
 
         //para ofertas limitadas
@@ -77,8 +80,8 @@ public class HomeFragment extends Fragment {
 
         //para categorias de inicio
         inicioCatRec.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        categoriasInicioList = new ArrayList<>();
-        categInicioAdapter = new CategInicioAdapter(getActivity(),categoriasInicioList);
+        modeloCategoriasInicioList = new ArrayList<>();
+        categInicioAdapter = new CategInicioAdapter(getActivity(), modeloCategoriasInicioList);
         inicioCatRec.setAdapter(categInicioAdapter);
 
         db.collection("CategoriasInicio")
@@ -89,9 +92,33 @@ public class HomeFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                CategoriasInicio categoriasInicio = document.toObject(CategoriasInicio.class);
-                                categoriasInicioList.add(categoriasInicio);
+                                ModeloCategoriasInicio modeloCategoriasInicio = document.toObject(ModeloCategoriasInicio.class);
+                                modeloCategoriasInicioList.add(modeloCategoriasInicio);
                                 categInicioAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Error: "+task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        //para recomendados
+        recomendadosRec.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        modeloRecomendadosList = new ArrayList<>();
+        recomendadosAdapter = new RecomendadosAdapter(getActivity(), modeloRecomendadosList);
+        recomendadosRec.setAdapter(recomendadosAdapter);
+
+        db.collection("Recomendados")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ModeloRecomendados modeloRecomendados = document.toObject(ModeloRecomendados.class);
+                                modeloRecomendadosList.add(modeloRecomendados);
+                                recomendadosAdapter.notifyDataSetChanged();
                             }
                         } else {
                             Toast.makeText(getActivity(), "Error: "+task.getException(), Toast.LENGTH_SHORT).show();

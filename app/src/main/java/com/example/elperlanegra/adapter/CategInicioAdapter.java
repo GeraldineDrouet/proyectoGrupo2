@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.elperlanegra.R;
-import com.example.elperlanegra.modelos.CategoriasInicio;
+import com.example.elperlanegra.modelos.ModeloCategoriasInicio;
 
 import java.util.List;
 
 public class CategInicioAdapter extends RecyclerView.Adapter<CategInicioAdapter.ViewHolder> {
 
     Context context;
-    List<CategoriasInicio> categoriasInicioList;
+    List<ModeloCategoriasInicio> modeloCategoriasInicioList;
 
-    public CategInicioAdapter(Context context, List<CategoriasInicio> categoriasInicioList) {
+    public CategInicioAdapter(Context context, List<ModeloCategoriasInicio> modeloCategoriasInicioList) {
         this.context = context;
-        this.categoriasInicioList = categoriasInicioList;
+        this.modeloCategoriasInicioList = modeloCategoriasInicioList;
     }
 
     @NonNull
@@ -34,13 +34,13 @@ public class CategInicioAdapter extends RecyclerView.Adapter<CategInicioAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull CategInicioAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(categoriasInicioList.get(position).getImg_url()).into(holder.catImg);
-        holder.nombre.setText(categoriasInicioList.get(position).getNombre());
+        Glide.with(context).load(modeloCategoriasInicioList.get(position).getImg_url()).into(holder.catImg);
+        holder.nombre.setText(modeloCategoriasInicioList.get(position).getNombre());
     }
 
     @Override
     public int getItemCount() {
-        return categoriasInicioList.size();
+        return modeloCategoriasInicioList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
