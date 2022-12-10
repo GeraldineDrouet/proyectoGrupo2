@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alice"
-                android:text="Productos Populares"
+                android:text="Ofertas Tiempo Limitado"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alice"
-                android:text="Explorar Platos"
+                android:text="Explorar Categorías"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
