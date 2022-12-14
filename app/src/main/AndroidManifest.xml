@@ -13,6 +13,13 @@
         android:theme="@style/Theme.ElPerlaNegra"
         tools:targetApi="31">
         <activity
+            android:name=".VerTodoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".WelcomeActivity"
             android:exported="true">
             <intent-filter>
@@ -28,7 +35,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -36,8 +42,6 @@
         <activity
             android:name=".RegistroActivity"
             android:exported="false">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

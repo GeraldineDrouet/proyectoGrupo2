@@ -1,6 +1,8 @@
 package com.example.elperlanegra.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.elperlanegra.R;
+import com.example.elperlanegra.VerTodoActivity;
 import com.example.elperlanegra.modelos.ModeloPopular;
 
 import java.util.List;
@@ -39,6 +42,15 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
         holder.descripcion.setText(modeloPopularList.get(position).getDescripcion());
         holder.raiting.setText(modeloPopularList.get(position).getRaiting());
         holder.descuento.setText(modeloPopularList.get(position).getDescuento());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, VerTodoActivity.class);
+                intent.putExtra("tipo",modeloPopularList.get(holder.getAdapterPosition()).getTipo());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
